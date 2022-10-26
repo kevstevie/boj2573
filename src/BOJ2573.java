@@ -42,7 +42,11 @@ class BOJ2573 {
     static void dfsEven(){
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                if (visit[i][j] || maps[i][j] == 0) {
+                if (visit[i][j]) {
+                    continue;
+                }
+                if (maps[i][j] == 0) {
+                    maps2[i][j] = 0;
                     continue;
                 }
                 stack.push(new Ice(i, j, maps[i][j]));
@@ -61,8 +65,9 @@ class BOJ2573 {
                         if (visit[x][y]) {
                             continue;
                         }
-                        if (maps[x][y] == 0 && maps2[now.x][now.y] > 0) {
+                        if (maps[x][y] == 0) {
                             maps2[now.x][now.y]--;
+                            if(maps2[now.x][now.y] < 0 ) maps2[now.x][now.y] = 0;
                         } else if (maps[x][y] > 0) {
                             stack.push(new Ice(x, y, maps[x][y]));
                             visit[x][y] = true;
@@ -75,7 +80,11 @@ class BOJ2573 {
     static void dfsOdd(){
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
-                if (visit[i][j] || maps2[i][j] == 0) {
+                if (visit[i][j]) {
+                    continue;
+                }
+                if (maps2[i][j] == 0) {
+                    maps[i][j] = 0;
                     continue;
                 }
                 stack.push(new Ice(i, j, maps2[i][j]));
@@ -94,8 +103,9 @@ class BOJ2573 {
                         if (visit[x][y]) {
                             continue;
                         }
-                        if (maps2[x][y] == 0 && maps[now.x][now.y] > 0) {
+                        if (maps2[x][y] == 0) {
                             maps[now.x][now.y]--;
+                            if(maps[now.x][now.y] < 0) maps[now.x][now.y] = 0;
                         } else if (maps2[x][y] > 0) {
                             stack.push(new Ice(x, y, maps2[x][y]));
                             visit[x][y] = true;
